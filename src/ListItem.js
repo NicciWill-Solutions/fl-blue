@@ -5,18 +5,20 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/DoneOutline';
 import RestoreIcon from '@material-ui/icons/Restore';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 
 const StyledListItem = styled.li`
   list-style: none;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
-const ItemName = styled.div`
+const ItemName = styled(Typography)`
   display: inline-block;
-  text-decoration: ${({ isCompleted }) =>
-    isCompleted ? 'line-through' : 'none'};
+  text-decoration: ${({ iscompleted }) =>
+    iscompleted ? 'line-through' : 'none'};
 `;
 
 const StyledTooltip = styled(Tooltip)`
@@ -45,17 +47,8 @@ const ListItem = ({ item, listItems, setListItems }) => {
 
   return (
     <StyledListItem>
-      <ItemName isCompleted={item.isCompleted}>{item.name}</ItemName>
+      <ItemName iscompleted={item.isCompleted}>{item.name}</ItemName>
       <div>
-        <StyledTooltip title='Delete' placement='left' arrow>
-          <IconButton
-            aria-label='delete'
-            onClick={() => handleDeleteItem(item.id)}
-          >
-            <DeleteIcon style={{ color: 'currentcolor' }} />
-          </IconButton>
-        </StyledTooltip>
-
         <IconButton
           onClick={() =>
             item.isCompleted
@@ -64,19 +57,24 @@ const ListItem = ({ item, listItems, setListItems }) => {
           }
         >
           {item.isCompleted ? (
-            <StyledTooltip
-              title='Move to Not Completed'
-              placement='right'
-              arrow
-            >
+            <StyledTooltip title='Move to Not Completed' placement='left' arrow>
               <RestoreIcon aria-label='not completed' />
             </StyledTooltip>
           ) : (
-            <StyledTooltip title='Move to Completed' placement='right' arrow>
+            <StyledTooltip title='Move to Completed' placement='left' arrow>
               <DoneIcon aria-label='completed' />
             </StyledTooltip>
           )}
         </IconButton>
+
+        <StyledTooltip title='Delete' placement='right' arrow>
+          <IconButton
+            aria-label='delete'
+            onClick={() => handleDeleteItem(item.id)}
+          >
+            <DeleteIcon style={{ color: 'currentcolor' }} />
+          </IconButton>
+        </StyledTooltip>
       </div>
     </StyledListItem>
   );

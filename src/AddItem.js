@@ -1,19 +1,19 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import Input from '@material-ui/core/Input';
+import { Typography } from '@material-ui/core';
 
 const StyledAddItem = styled.div`
-  margin-bottom: 20px;
-`;
-
-const AddButton = styled.button`
-  margin-left: 5px;
+  margin: 30px 0;
 `;
 
 const ErrorMessage = styled.div`
-  color: red;
+  color: #ff0000;
   position: relative;
-  left: -50px;
+  left: -77px;
 `;
 
 const AddItem = ({ listItems, setListItems }) => {
@@ -25,7 +25,6 @@ const AddItem = ({ listItems, setListItems }) => {
     const maxIdReducer = (acc, curr) => (curr.id > acc ? curr.id : acc);
     const maxId = listItems?.reduce(maxIdReducer, listItems[0]?.id) || 0;
 
-    //TODO also check for a number?
     if (!newItem) {
       setError('Please enter an item');
     } else {
@@ -51,18 +50,30 @@ const AddItem = ({ listItems, setListItems }) => {
 
   return (
     <StyledAddItem>
-      <input
+      <Input
         type='text'
         name='addItem'
         placeholder='Enter Item'
-        ref={itemInputRef}
+        inputRef={itemInputRef}
         onChange={clearErrorMsg}
         onKeyPress={handleKeyPress}
-      ></input>
-      <AddButton style={{ marginLeft: '5px' }} onClick={handleAddItem}>
+        variant='outlined'
+      ></Input>
+      <Button
+        variant='contained'
+        color='primary'
+        startIcon={<AddIcon />}
+        onClick={handleAddItem}
+      >
         Add Item
-      </AddButton>
-      {error ? <ErrorMessage>{error}</ErrorMessage> : ''}
+      </Button>
+      {error ? (
+        <Typography>
+          <ErrorMessage>{error}</ErrorMessage>
+        </Typography>
+      ) : (
+        ''
+      )}
     </StyledAddItem>
   );
 };
