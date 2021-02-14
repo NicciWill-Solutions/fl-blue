@@ -1,5 +1,20 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const StyledAddItem = styled.div`
+  margin-bottom: 20px;
+`;
+
+const AddButton = styled.button`
+  margin-left: 5px;
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  position: relative;
+  left: -50px;
+`;
 
 const AddItem = ({ listItems, setListItems }) => {
   const [error, setError] = useState('');
@@ -35,7 +50,7 @@ const AddItem = ({ listItems, setListItems }) => {
   }
 
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <StyledAddItem>
       <input
         type='text'
         name='addItem'
@@ -44,18 +59,11 @@ const AddItem = ({ listItems, setListItems }) => {
         onChange={clearErrorMsg}
         onKeyPress={handleKeyPress}
       ></input>
-      {/* TODO: click button on Enter */}
-      <button style={{ marginLeft: '5px' }} onClick={handleAddItem}>
+      <AddButton style={{ marginLeft: '5px' }} onClick={handleAddItem}>
         Add Item
-      </button>
-      {error ? (
-        <div style={{ color: 'red', position: 'relative', left: '-50px' }}>
-          {error}
-        </div>
-      ) : (
-        ''
-      )}
-    </div>
+      </AddButton>
+      {error ? <ErrorMessage>{error}</ErrorMessage> : ''}
+    </StyledAddItem>
   );
 };
 
