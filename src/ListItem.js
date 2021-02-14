@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import IconButton from '@material-ui/core/IconButton';
+// import DeleteIcon from '@material-ui/icons/Delete';
 
 const ListItem = ({ item, listItems, setListItems }) => {
   function handleDeleteItem(itemId) {
@@ -30,9 +30,7 @@ const ListItem = ({ item, listItems, setListItems }) => {
         style={{ cursor: 'pointer' }}
         onClick={() => handleDeleteItem(item.id)}
       >
-        <IconButton>
-          <DeleteIcon />
-        </IconButton>
+        DEL
       </span>
       |{' '}
       <span
