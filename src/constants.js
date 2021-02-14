@@ -20,3 +20,6 @@ export const myList = [
     isCompleted: false,
   },
 ];
+
+export const intro =
+  'Welcome to the NicciWill Shopping List. I hope you find it useful. Happy Shopping!';

@@ -24,31 +24,49 @@ const ListItem = ({ item, listItems, setListItems }) => {
   }
 
   return (
-    <li>
-      {item.name} |{' '}
-      <span
-        style={{ cursor: 'pointer' }}
-        onClick={() => handleDeleteItem(item.id)}
+    <li
+      style={{
+        listStyle: 'none',
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: '10px 0',
+      }}
+    >
+      <div
+        style={{
+          display: 'inline-block',
+          textDecoration: item.isCompleted ? 'line-through' : 'none',
+        }}
       >
-        DEL
-      </span>
-      |{' '}
-      <span
-        style={{ cursor: 'pointer' }}
-        onClick={() =>
-          item.isCompleted
-            ? handleMarkNotCompleted(item.id)
-            : handleMarkCompleted(item.id)
-        }
-      >
-        {item.isCompleted ? 'MTNC' : 'MTC'}
-      </span>
+        {item.name}
+      </div>
+      <div style={{ display: 'inline-block' }}>
+        <span
+          style={{ cursor: 'pointer' }}
+          onClick={() => handleDeleteItem(item.id)}
+        >
+          DEL
+        </span>
+        |{' '}
+        <span
+          style={{ cursor: 'pointer' }}
+          onClick={() =>
+            item.isCompleted
+              ? handleMarkNotCompleted(item.id)
+              : handleMarkCompleted(item.id)
+          }
+        >
+          {item.isCompleted ? 'MTNC' : 'MTC'}
+        </span>
+      </div>
     </li>
   );
 };
 
 ListItem.propTypes = {
   item: PropTypes.object.isRequired,
+  listItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setListItems: PropTypes.func.isRequired,
 };
 
 export default ListItem;
