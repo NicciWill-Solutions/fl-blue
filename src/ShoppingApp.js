@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import ListItem from './ListItem';
 
 function ShoppingApp() {
   const myList = [
@@ -47,23 +48,10 @@ function ShoppingApp() {
     itemInputRef.current.focus();
   }
 
-  function handleDeleteItem(itemId) {
-    const updatedList = listItems.filter((item) => item.id !== itemId);
-    setListItems(updatedList);
-  }
-
-  function handleMarkNotCompleted(itemId) {
-    const itemToUpdate = listItems.filter((item) => item.id === itemId);
-    const updatedList = listItems.filter((item) => item.id !== itemId);
-    itemToUpdate[0].isCompleted = false;
-    setListItems([...itemToUpdate, ...updatedList]);
-  }
-
-  function handleMarkCompleted(itemId) {
-    const itemToUpdate = listItems.filter((item) => item.id === itemId);
-    const updatedList = listItems.filter((item) => item.id !== itemId);
-    itemToUpdate[0].isCompleted = true;
-    setListItems([...itemToUpdate, ...updatedList]);
+  function handleKeyPress(e) {
+    if (e.charCode === 13) {
+      handleAddItem();
+    }
   }
 
   function clearErrorMsg() {
@@ -80,7 +68,9 @@ function ShoppingApp() {
           placeholder='Enter Item'
           ref={itemInputRef}
           onChange={clearErrorMsg}
+          onKeyPress={handleKeyPress}
         ></input>
+        {/* TODO: click button on Enter */}
         <button onClick={handleAddItem}>Add</button>
         {error ? <div style={{ color: 'red' }}>{error}</div> : ''}
       </div>
@@ -91,22 +81,12 @@ function ShoppingApp() {
         <h3>Not Completed</h3>
         {listItems.map((item) =>
           !item.isCompleted ? (
-            <div key={item.id}>
-              {item.name} |{' '}
-              <span
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleDeleteItem(item.id)}
-              >
-                DEL
-              </span>
-              |{' '}
-              <span
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleMarkCompleted(item.id)}
-              >
-                MTC
-              </span>
-            </div>
+            <ListItem
+              item={item}
+              key={item.id}
+              listItems={listItems}
+              setListItems={setListItems}
+            />
           ) : null
         )}
       </div>
@@ -114,15 +94,12 @@ function ShoppingApp() {
         <h3>Completed</h3>
         {listItems.map((item) =>
           item.isCompleted ? (
-            <div key={item.id}>
-              {item.name} |{' '}
-              <span
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleMarkNotCompleted(item.id)}
-              >
-                MTNC
-              </span>
-            </div>
+            <ListItem
+              item={item}
+              key={item.id}
+              listItems={listItems}
+              setListItems={setListItems}
+            />
           ) : null
         )}
       </div>
