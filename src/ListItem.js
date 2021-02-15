@@ -31,17 +31,10 @@ const ListItem = ({ item, listItems, setListItems }) => {
     setListItems(updatedList);
   }
 
-  function handleMarkCompleted(itemId) {
+  function handleCompletedStatus(itemId, isCompleted) {
     const itemToUpdate = listItems.filter((item) => item.id === itemId);
     const updatedList = listItems.filter((item) => item.id !== itemId);
-    itemToUpdate[0].isCompleted = true;
-    setListItems([...itemToUpdate, ...updatedList]);
-  }
-
-  function handleMarkNotCompleted(itemId) {
-    const itemToUpdate = listItems.filter((item) => item.id === itemId);
-    const updatedList = listItems.filter((item) => item.id !== itemId);
-    itemToUpdate[0].isCompleted = false;
+    itemToUpdate[0].isCompleted = isCompleted ? false : true;
     setListItems([...itemToUpdate, ...updatedList]);
   }
 
@@ -50,11 +43,7 @@ const ListItem = ({ item, listItems, setListItems }) => {
       <ItemName iscompleted={item.isCompleted}>{item.name}</ItemName>
       <div>
         <IconButton
-          onClick={() =>
-            item.isCompleted
-              ? handleMarkNotCompleted(item.id)
-              : handleMarkCompleted(item.id)
-          }
+          onClick={() => handleCompletedStatus(item.id, item.isCompleted)}
         >
           {item.isCompleted ? (
             <StyledTooltip title='Move to Not Completed' placement='left' arrow>
