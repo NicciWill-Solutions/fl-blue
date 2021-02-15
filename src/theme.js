@@ -12,6 +12,9 @@ const theme = createMuiTheme({
       main: '#ebdcd7',
       contrastText: '#397a98',
     },
+    info: {
+      main: '#b2aabb',
+    },
   },
 });
 
@@ -25,6 +28,11 @@ theme.overrides = {
   MuiButton: {
     root: {
       marginLeft: '15px',
+    },
+  },
+  MuiAvatar: {
+    root: {
+      background: '#b2aabb',
     },
   },
 };

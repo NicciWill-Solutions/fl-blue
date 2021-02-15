@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -6,6 +6,7 @@ import DoneIcon from '@material-ui/icons/DoneOutline';
 import RestoreIcon from '@material-ui/icons/Restore';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 import styled from 'styled-components';
 
 const StyledListItem = styled.li`
@@ -15,10 +16,17 @@ const StyledListItem = styled.li`
   align-items: center;
 `;
 
+const ItemWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const ItemName = styled(Typography)`
   display: inline-block;
   text-decoration: ${({ iscompleted }) =>
     iscompleted ? 'line-through' : 'none'};
+  padding-left: 0.75rem;
+  text-transform: uppercase;
 `;
 
 const StyledTooltip = styled(Tooltip)`
@@ -26,6 +34,16 @@ const StyledTooltip = styled(Tooltip)`
 `;
 
 const ListItem = ({ item, listItems, setListItems }) => {
+  const [itemImg, setItemImg] = useState('');
+
+  useEffect(() => {
+    const url = `https://www.themealdb.com/images/ingredients/${item.name}-Small.png?key=1`;
+    const getImg = () => {
+      fetch(url).then((res) => (res.ok ? setItemImg(url) : 'none'));
+    };
+    getImg();
+  }, [item]);
+
   function handleDeleteItem(itemId) {
     const updatedList = listItems.filter((item) => item.id !== itemId);
     setListItems(updatedList);
@@ -40,7 +58,12 @@ const ListItem = ({ item, listItems, setListItems }) => {
 
   return (
     <StyledListItem>
-      <ItemName iscompleted={item.isCompleted}>{item.name}</ItemName>
+      <ItemWrapper>
+        <Avatar alt={item.name} src={itemImg}>
+          N/A
+        </Avatar>
+        <ItemName iscompleted={item.isCompleted}>{item.name}</ItemName>
+      </ItemWrapper>
       <div>
         <IconButton
           onClick={() => handleCompletedStatus(item.id, item.isCompleted)}
