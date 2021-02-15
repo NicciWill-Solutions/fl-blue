@@ -39,7 +39,7 @@ const ListItem = ({ item, listItems, setListItems }) => {
   useEffect(() => {
     const url = `https://www.themealdb.com/images/ingredients/${item.name}-Small.png?key=1`;
     const getImg = () => {
-      fetch(url).then((res) => (res.ok ? setItemImg(url) : 'none'));
+      fetch(url).then((res) => (res.ok ? setItemImg(url) : setItemImg('none')));
     };
     getImg();
   }, [item]);
