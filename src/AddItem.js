@@ -5,13 +5,14 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Input from '@material-ui/core/Input';
 import { Typography } from '@material-ui/core';
+import theme from './theme';
 
 const StyledAddItem = styled.div`
   margin: 30px 0;
 `;
 
-const ErrorMessage = styled.div`
-  color: #ff0000;
+const ErrorMessage = styled(Typography)`
+  color: ${theme.palette.error.main};
   position: relative;
   left: -77px;
 `;
@@ -67,13 +68,7 @@ const AddItem = ({ listItems, setListItems }) => {
       >
         Add Item
       </Button>
-      {error ? (
-        <Typography>
-          <ErrorMessage>{error}</ErrorMessage>
-        </Typography>
-      ) : (
-        ''
-      )}
+      {error ? <ErrorMessage>{error}</ErrorMessage> : ''}
     </StyledAddItem>
   );
 };

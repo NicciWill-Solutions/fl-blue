@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AddItem from './AddItem';
 import ListItem from './ListItem';
-import { intro, myList } from './constants';
+import { intro } from './constants';
 import styled from 'styled-components';
 import { ThemeProvider } from '@material-ui/core';
 import theme from './theme';
@@ -10,11 +10,11 @@ import Typography from '@material-ui/core/Typography';
 const StyledShoppingApp = styled.div`
   display: flex;
   justify-content: center;
-  color: #3a6077;
+  color: ${theme.palette.primary.dark};
 `;
 
 const ListWrapper = styled.div`
-  border: 1px dotted #397a98;
+  border: 1px dotted ${theme.palette.primary.light};
   padding: 30px 50px;
   margin-top: 30px;
   border-radius: 4px;
@@ -22,25 +22,29 @@ const ListWrapper = styled.div`
   width: 40%;
 `;
 
+const IntroWrapper = styled(Typography)`
+  color: ${theme.palette.grey[500]};
+`;
+
 const List = styled.div`
-  border: 1px dotted #397a98;
+  border: 1px dotted ${theme.palette.primary.light};
   margin-bottom: 30px;
   border-radius: 4px;
   padding: 15px;
 `;
 
 const NotCompletedWrapper = styled(List)`
-  background: #ebdcd7;
-  color: #50a3b7;
+  background: ${theme.palette.secondary.main};
+  color: ${theme.palette.primary.main};
 `;
 
 const CompletedWrapper = styled(List)`
-  background: #50a3b7;
-  color: #ebdcd7;
+  background: ${theme.palette.primary.main};
+  color: ${theme.palette.secondary.main};
 `;
 
 function ShoppingApp() {
-  const [listItems, setListItems] = useState(myList);
+  const [listItems, setListItems] = useState([]);
   const [notCompletedList, setNotCompletedList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
 
@@ -68,7 +72,7 @@ function ShoppingApp() {
       <StyledShoppingApp>
         <ListWrapper>
           <Typography variant='h2'>Grocery Shopping List</Typography>
-          <Typography>{intro}</Typography>
+          <IntroWrapper>{intro}</IntroWrapper>
           <AddItem listItems={listItems} setListItems={setListItems} />
           <NotCompletedWrapper>
             <Typography variant='h6'>Not Completed</Typography>
